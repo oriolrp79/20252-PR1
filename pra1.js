@@ -106,7 +106,7 @@ class AnimeList {
    * Añade un anime a la lista.
    */
   addAnime(anime) {   /*per afegir un nou camp a la taula*/
-    this.list[this.list.length] = anime;
+    this.list[this.list.length] = anime;  /*vaig a l'últim camp+1 i allà hi poso el nou element, ampliant la llista*/
     // ...
   }
 
@@ -114,12 +114,12 @@ class AnimeList {
    * Elimina un anime de la lista por su mal_id.
    */
   removeAnime(animeId) {
-    for (let i = 0; i < this.list.length; i++) {
+    for (let i = 0; i < this.list.length; i++) {  /*faig repetició per comparar el Id i quan el trobo l'elimino "corrent" els posteriors cap endavant i "tapant-lo"*/
       if (this.list[i]._mal_id===animeId){
         for (let a = i; a < this.list.length-1; a++) {
           this.list[a]=this.list[a+1];
         }  
-        this.list.pop();
+        this.list.pop();  /*l'últim element de la llista, perquè no quedi repetit, l'elimino, així he eliminat l'element demanat i escurçat la llista*/
       }
     }
     //...
@@ -130,6 +130,7 @@ class AnimeList {
    */
   showList() {
     //...
+    console.log(this.list); /*imprimim en pantalla la llista*/
   }
 
   /* ===========================================================================
@@ -144,6 +145,7 @@ class AnimeList {
    */
   addMultipleAnimes = (...animes) => {
     //... 
+    this.list.push (...animes);  /*a aquesta llista li afegim (fem push) de tots els animes que li donem*/
   };
 
   /**
@@ -151,6 +153,8 @@ class AnimeList {
    */
   getAnimesByScoreRange = (minScore, maxScore) => {
     //...
+       
+    return this.list.filter ( anime => anime.score>= minScore && anime.score <= maxScore );
   };
 
   /**
@@ -448,10 +452,16 @@ console.log(steinsGate.getId);
 /*comprovació 2*/
 const llista = [snk, demonSlayer];
 llistaAnime= new AnimeList (llista);
-console.log(llistaAnime.list);
+llistaAnime.showList();
 
 llistaAnime.addAnime(steinsGate);
-console.log(llistaAnime.list);
+llistaAnime.showList();
 
 llistaAnime.removeAnime(demonSlayer.getId);
-console.log(llistaAnime.list);
+llistaAnime.showList();
+
+/*comprovació 3*/
+llistaAnime.addMultipleAnimes(chainsaw,deathNote);
+llistaAnime.showList();
+
+console.log(llistaAnime.getAnimesByScoreRange(4, 5));
