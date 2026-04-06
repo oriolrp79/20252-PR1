@@ -10,7 +10,7 @@
  *   - Recursividad, reduce, map, filter
  *   - Destructuring y spread operator
  *
- * Convenciones ha seguir:
+ * Convenciones a seguir:
  *   - Se usa `const` para valores que no cambian y `let` para los que sí.
  *   - Las funciones anónimas se escriben como arrow functions.
  *   - Los nombres siguen camelCase (variables/funciones) y PascalCase (clases).
@@ -30,14 +30,59 @@
    ============================================================================= */
 
 class Anime {
-  constructor({id, title,synopsis, episodes, status, score, type, genres, studios, image_url, popularity}) {
+  constructor({mal_id, title,synopsis, episodes, status, score, type, genres, studios, image_url, popularity}) { /*poso el nom mal_id com està definit després a les dades*/
+    this._mal_id = mal_id,
+    this._title = title,
+    this._synopsis = synopsis,
+    this._episodes = episodes,
+    this._status=status,
+    this._score = score,
+    this._type =type,
+    this._genres = genres,
+    this._studios= studios,
+    this._image_url= image_url,
+    this._popularity=popularity;
+  
+
     // Usamos propiedades privadas (convención con _) para obligar el acceso
     // a través de getters/setters y poder añadir validaciones centralizadas.
     // ...
   }
 
   // ── Getters ──────────────────────────────────────────────────────────────
-
+  get getId() {    /*cada get que accedeix a una propietat*/
+    return this._mal_id;
+  }
+  get getTitle() {    
+    return this._title;
+  }
+  get getSynopsis() {
+    return this._synopsis;
+  }
+  get getEpisodes(){
+    return this._episodes;
+  }
+  get getStatus(){
+    return this._status;
+  }
+  get getScore() {
+    return this._score ;
+  }
+  get getType(){
+    return this._type;
+  }
+  get getGenres(){
+    return this._genres;
+  }
+  get getStudios(){
+    return this._studios;
+  }
+  get getImage_url() {
+    return this._image_url;
+  }
+  get getPopularity(){
+    return this._popularity;
+  }
 
   // ── Setters con validación básica ────────────────────────────────────────
 
@@ -52,14 +97,16 @@ class Anime {
 
 class AnimeList {
 
-  constructor() {
+  constructor(list) {  /*preparem AnimeList, per poder posar una taula d'objectes Anime*/
+    this.list= list;
     //...
   }
 
   /**
    * Añade un anime a la lista.
    */
-  addAnime(anime) {
+  addAnime(anime) {   /*per afegir un nou camp a la taula*/
+    this.list[this.list.length] = anime;
     // ...
   }
 
@@ -67,6 +114,14 @@ class AnimeList {
    * Elimina un anime de la lista por su mal_id.
    */
   removeAnime(animeId) {
+    for (let i = 0; i < this.list.length; i++) {
+      if (this.list[i]._mal_id===animeId){
+        for (let a = i; a < this.list.length-1; a++) {
+          this.list[a]=this.list[a+1];
+        }  
+        this.list.pop();
+      }
+    }
     //...
   }
 
@@ -386,4 +441,17 @@ const steinsGate = new Anime({
   popularity: 18,
 });
 
+/*comprovació 1*/
+console.log("***********************************************************************"); /*separador per veure millor al terminal l'inici de cada render*/
+console.log(steinsGate.getId);
 
+/*comprovació 2*/
+const llista = [snk, demonSlayer];
+llistaAnime= new AnimeList (llista);
+console.log(llistaAnime.list);
+
+llistaAnime.addAnime(steinsGate);
+console.log(llistaAnime.list);
+
+llistaAnime.removeAnime(demonSlayer.getId);
+console.log(llistaAnime.list);
