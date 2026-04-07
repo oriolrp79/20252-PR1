@@ -154,7 +154,7 @@ class AnimeList {
   getAnimesByScoreRange = (minScore, maxScore) => {
     //...
        
-    return this.list.filter ( anime => anime.getScore>= minScore && anime.getScore <= maxScore );
+    return this.list.filter ( anime => anime.getScore>= minScore && anime.getScore <= maxScore);
   };
 
   /**
@@ -163,6 +163,7 @@ class AnimeList {
    */
   sortAnimesByPopularity = () => {
     //...
+    return this.list.sort ( (a,b) => a.getPopularity-b.getPopularity);
   };
 }
 
@@ -445,11 +446,11 @@ const steinsGate = new Anime({
   popularity: 18,
 });
 
-/*comprovació 1*/
+/*comprovació etapa 1*/
 console.log("***********************************************************************"); /*separador per veure millor al terminal l'inici de cada render*/
 console.log(steinsGate.getId);
 
-/*comprovació 2*/
+/*comprovació etapa 2*/
 const llistaAnime= new AnimeList ([snk, demonSlayer]); /*creem un objecte de class AnimeList que reb un array amb uns elements anime*/
 llistaAnime.showList();  /*imprimim la llista en pantalla*/
 
@@ -459,9 +460,15 @@ llistaAnime.showList();
 llistaAnime.removeAnime(demonSlayer.getId); /*en treiem un amb el seu Id*/
 llistaAnime.showList();
 
-/*comprovació 3*/
+/*comprovació etapa 3*/
 llistaAnime.addMultipleAnimes(chainsaw,deathNote); /*afegim dos més*/
 llistaAnime.showList();
 
 console.log(llistaAnime.getAnimesByScoreRange(8, 9)); /*imprimim només els animes amb score entre els dos valors*/
+
+llistaAnime.sortAnimesByPopularity(); /*ordenem la llista per popularitat*/         
+llistaAnime.showList();  /*imprimim la llista ordenada per popularitat. */
+    /* podriem haver fet també console.log(llistaAnime.sortAnimesByPopularity()); per imprimir-ho directament*/
+
+/*comprovació etapa 4*/
 
