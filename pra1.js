@@ -145,7 +145,7 @@ class AnimeList {
    */
   addMultipleAnimes = (...animes) => {
     //... 
-    this.list.push (...animes);  /*a aquesta llista li afegim (fem push) de tots els animes que li donem*/
+    this.list.push (...animes) ;  /*a aquesta llista li afegim (fem push) de tots els animes que li donem*/
   };
 
   /**
@@ -154,7 +154,7 @@ class AnimeList {
   getAnimesByScoreRange = (minScore, maxScore) => {
     //...
        
-    return this.list.filter ( anime => anime.score>= minScore && anime.score <= maxScore );
+    return this.list.filter ( anime => anime.getScore>= minScore && anime.getScore <= maxScore );
   };
 
   /**
@@ -450,18 +450,18 @@ console.log("*******************************************************************
 console.log(steinsGate.getId);
 
 /*comprovació 2*/
-const llista = [snk, demonSlayer];
-llistaAnime= new AnimeList (llista);
+const llistaAnime= new AnimeList ([snk, demonSlayer]); /*creem un objecte de class AnimeList que reb un array amb uns elements anime*/
+llistaAnime.showList();  /*imprimim la llista en pantalla*/
+
+llistaAnime.addAnime(steinsGate); /*n'afegim un individual*/
 llistaAnime.showList();
 
-llistaAnime.addAnime(steinsGate);
-llistaAnime.showList();
-
-llistaAnime.removeAnime(demonSlayer.getId);
+llistaAnime.removeAnime(demonSlayer.getId); /*en treiem un amb el seu Id*/
 llistaAnime.showList();
 
 /*comprovació 3*/
-llistaAnime.addMultipleAnimes(chainsaw,deathNote);
+llistaAnime.addMultipleAnimes(chainsaw,deathNote); /*afegim dos més*/
 llistaAnime.showList();
 
-console.log(llistaAnime.getAnimesByScoreRange(4, 5));
+console.log(llistaAnime.getAnimesByScoreRange(8, 9)); /*imprimim només els animes amb score entre els dos valors*/
+
