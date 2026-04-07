@@ -154,7 +154,8 @@ class AnimeList {
   getAnimesByScoreRange = (minScore, maxScore) => {
     //...
        
-    return this.list.filter ( anime => anime.getScore>= minScore && anime.getScore <= maxScore);
+    return this.list.filter ( anime => anime.getScore>= minScore && anime.getScore <= maxScore); 
+    /*retornem la llista a la que fa referència, filtrada per als anime, complint les condicions de que estiguin en el rang definit quan l'hem cridat*/
   };
 
   /**
@@ -164,6 +165,7 @@ class AnimeList {
   sortAnimesByPopularity = () => {
     //...
     return this.list.sort ( (a,b) => a.getPopularity-b.getPopularity);
+    /*agafem la llista i la ordenem amb sort, definint dos dels elements amb les lletres a i b i cridant al getter getPopularity */
   };
 }
 
@@ -176,9 +178,15 @@ class AnimeList {
 /**
  * Busca recursivamente un anime en una AnimeList por su mal_id.
  */
-const findAnimeById = (/*animeList, */mal_id/*, index = 0*/) => {
+const findAnimeById = (animeList, mal_id, index = 0) => {
   //...
-  return this.list.find (anime => anime.getId===mal_id);
+  if (animeList[index].getId===mal_id) {  
+    /*si l'array en la posició index i el id (cridat amb el getter getId) és igual a la variable mal_id*/
+    return animeList[index]; /*llavors retorna aquest element de l'array*/
+  } else {
+    return findAnimeById (animeList,mal_id,index+1); 
+    /*sino, retornem la pròpia funció recursiva amb index creixent, fins que trobi la coincidència*/
+  }
 };
 
 
@@ -473,4 +481,4 @@ llistaAnime.showList();  /*imprimim la llista ordenada per popularitat. */
     /* podriem haver fet també console.log(llistaAnime.sortAnimesByPopularity()); per imprimir-ho directament*/
 
 console.log("comprovació etapa 4");
-console.log(llistaAnime.findAnimeById(44511));
+console.log(findAnimeById(llistaAnime.list,44511,0));
