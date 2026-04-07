@@ -176,8 +176,9 @@ class AnimeList {
 /**
  * Busca recursivamente un anime en una AnimeList por su mal_id.
  */
-const findAnimeById = (animeList, mal_id, index = 0) => {
+const findAnimeById = (/*animeList, */mal_id/*, index = 0*/) => {
   //...
+  return this.list.find (anime => anime.getId===mal_id);
 };
 
 
@@ -446,11 +447,12 @@ const steinsGate = new Anime({
   popularity: 18,
 });
 
-/*comprovació etapa 1*/
+
 console.log("***********************************************************************"); /*separador per veure millor al terminal l'inici de cada render*/
+console.log("comprovació etapa 1");
 console.log(steinsGate.getId);
 
-/*comprovació etapa 2*/
+console.log("comprovació etapa 2");
 const llistaAnime= new AnimeList ([snk, demonSlayer]); /*creem un objecte de class AnimeList que reb un array amb uns elements anime*/
 llistaAnime.showList();  /*imprimim la llista en pantalla*/
 
@@ -460,7 +462,7 @@ llistaAnime.showList();
 llistaAnime.removeAnime(demonSlayer.getId); /*en treiem un amb el seu Id*/
 llistaAnime.showList();
 
-/*comprovació etapa 3*/
+console.log("comprovació etapa 3");
 llistaAnime.addMultipleAnimes(chainsaw,deathNote); /*afegim dos més*/
 llistaAnime.showList();
 
@@ -470,5 +472,5 @@ llistaAnime.sortAnimesByPopularity(); /*ordenem la llista per popularitat*/
 llistaAnime.showList();  /*imprimim la llista ordenada per popularitat. */
     /* podriem haver fet també console.log(llistaAnime.sortAnimesByPopularity()); per imprimir-ho directament*/
 
-/*comprovació etapa 4*/
-
+console.log("comprovació etapa 4");
+console.log(llistaAnime.findAnimeById(44511));
