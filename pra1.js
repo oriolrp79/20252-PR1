@@ -200,8 +200,29 @@ const findAnimeById = (animeList, mal_id, index = 0) => {
  * el nombre del género más frecuente.
  */
 const getMostCommonGenre = (animeList) => {
-  //...
+  /* primer faré una llista genreList, array de 2x11, amb tots els gèneres*/
+  let genreList=[['Action','Adventure','Comedy','Drama','Fantasy','Sci-Fi','Sports','Shounen','Supernatural','Mystery','Psychological'],[0,0,0,0,0,0,0,0,0,0,0]];
+  
+  /*passo per tots els gèneres d'animeList i els compto*/
+  for (g=0; g<genreList[0].length; g++){
+    for (i=0; i<animeList.list.length; i++){
+      for (a=0; a<animeList.list[i].getGenres.length;a++){
+        if (genreList[0][g]===animeList.list[i].getGenres[a].name){
+          genreList[1][g]=genreList[1][g]+1;
+        }   
+      }
+    }  
+  }
+console.log(genreList); /*imprimim per comprovar que funciona*/
+
+  /*ara buscarem el num més gran de genreList[1]*/
+  let maxnum = Math.max(...genreList[1]);
+
+  /*retornem el nom associat al num més alt maxnum. 
+  Si hi ha dos gèneres amb el mateix maxnum només torna el primer que troba, s'hauria d'arreglar tot i que l'exercici no ho demana, sembla*/
+  return genreList[0].find ((g,num) => genreList[1][num]===maxnum);
 };
+
 
 
 /* =============================================================================
@@ -482,3 +503,9 @@ llistaAnime.showList();  /*imprimim la llista ordenada per popularitat. */
 
 console.log("comprovació etapa 4");
 console.log(findAnimeById(llistaAnime.list,44511,0));
+
+console.log("comprovació etapa 5");
+/*afegeixo tots els animes que faltaven*/
+llistaAnime.addMultipleAnimes(demonSlayer, jujutsuKaisen, cowboyBebop, hunterXHunter, dragonBallZ, naruto, haikyuu, fullmetalAlchemist);
+console.log(getMostCommonGenre(llistaAnime));
+
