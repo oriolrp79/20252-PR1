@@ -257,13 +257,23 @@ const getHighRatedAnimes = (animesArray, minScore) => {
 const getAnimeInfo = (anime) => {
   // Destructuring: extraemos las propiedades que nos interesan del objeto anime
   //... 
+  const {_title:title, _type:type, _score:score}= anime;
+  /*fem destructuring assignant les propietats del anime a variables del mateix nom*/
+  /*ens estalviem definir les const individualment el valor dels quals agafariem amb els getters:
+  const title= anime.getTitle;
+  const type = anime.getType;
+  const score= anime.getScore ; */
+  const genre = anime.getGenres[0].name; /*separadament busquem el nom del genre*/
+  const studio= anime.getStudios[0].name; /*i el de l'estudi*/
+
+  const animeConMidInfo = {title, type, score, genre, studio}; /*ara, sí, ho compilem tot dins d'animeConMidInfo*/
 
   // Mostramos la información de forma organizada en la consola
-  //...
+  console.log("L'anime: "+animeConMidInfo.title+", de tipus: "+animeConMidInfo.type+", té una puntuació de "+animeConMidInfo.score+", és del gènere "+animeConMidInfo.genre+" i és produït pels estudis "+animeConMidInfo.studio+".");
 
   // Creamos un nuevo objeto con spread: copiamos todo el anime y añadimos fullInfo
   //...
-
+  animeConFullInfo= {...animeConMidInfo, fullInfo: true}; /*mètode spread per afegir al final fullInfo*/
   return animeConFullInfo;
 };
 
@@ -516,3 +526,6 @@ console.log(getMostCommonGenre(llistaAnime));
 
 console.log("comprovació etapa 6");
 console.log(getHighRatedAnimes(llistaAnime,8.5));
+
+console.log("comprovació etapa 7");
+console.log(getAnimeInfo(dragonBallZ));
