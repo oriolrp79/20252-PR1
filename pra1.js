@@ -236,6 +236,11 @@ console.log(genreList); /*imprimim per comprovar que funciona*/
  */
 const getHighRatedAnimes = (animesArray, minScore) => {
   //...
+  /*definim un array nou per fer el pas intermig, que tindrà la mateixa estructura que l'original però només amb els elements filtrats que compleixin la condició*/
+  let filteredAnimesArray = animesArray.list.filter ( anime => anime.getScore>=minScore); 
+  /*retornem una taula simplificada només amb una columna, gràcies al map, amb els títols que compleixen la condició prèvia*/
+  return filteredAnimesArray.map ( anime => anime.getTitle);
+
 };
 
 
@@ -251,7 +256,7 @@ const getHighRatedAnimes = (animesArray, minScore) => {
  */
 const getAnimeInfo = (anime) => {
   // Destructuring: extraemos las propiedades que nos interesan del objeto anime
-  //...
+  //... 
 
   // Mostramos la información de forma organizada en la consola
   //...
@@ -509,3 +514,5 @@ console.log("comprovació etapa 5");
 llistaAnime.addMultipleAnimes(demonSlayer, jujutsuKaisen, cowboyBebop, hunterXHunter, dragonBallZ, naruto, haikyuu, fullmetalAlchemist);
 console.log(getMostCommonGenre(llistaAnime));
 
+console.log("comprovació etapa 6");
+console.log(getHighRatedAnimes(llistaAnime,8.5));
