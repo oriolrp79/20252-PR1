@@ -180,9 +180,9 @@ class AnimeList {
  */
 const findAnimeById = (animeList, mal_id, index = 0) => {
   //...
-  if (animeList[index].getId===mal_id) {  
+  if (animeList.list[index].getId===mal_id) {  
     /*si l'array en la posició index i el id (cridat amb el getter getId) és igual a la variable mal_id*/
-    return animeList[index]; /*llavors retorna aquest element de l'array*/
+    return animeList.list[index]; /*llavors retorna aquest element de l'array*/
   } else {
     return findAnimeById (animeList,mal_id,index+1); 
     /*sino, retornem la pròpia funció recursiva amb index creixent, fins que trobi la coincidència*/
@@ -289,6 +289,26 @@ const getAnimeInfo = (anime) => {
  */
 const getAnimesByStudio = (animesArray, nombreEstudio) => {
   //...
+  /*primer creem un array per filtrar animesArray i que hi hagi dins només els que tenen dins de _studios.name (cridat amb el getter) coincidència amb nombreEstudio*/
+  let animesPerStudio = animesArray.list.filter (animesArray => animesArray.getStudios[0].name===nombreEstudio);
+  //console.log(animesPerStudio);
+
+  /*creo l'objecte newConfigAnime, que serà el que retornarem amb la nova config de dades*/
+  let newConfigAnime= {};
+  /*li fico les dades, studio i count és directe*/
+  newConfigAnime.studio= nombreEstudio;
+  newConfigAnime.count= animesPerStudio.length;
+  newConfigAnime.animes= animesPerStudio.map (anime => anime.getTitle); /*uso map per quedar-nos només amb els titles dins d'un array*/
+  //console.log(newConfigAnime);
+ 
+  /*calculem la mitjana, primer usant map per quedar-nos amb els scores dins d'un array que anomenem taulaScores*/
+  let taulaScores=animesPerStudio.map (animes => animes.getScore);
+  /*reduce per sumar tots els valors de l'array, que després dividim per la quantitat d'animes dels estudis demanats*/
+  let mitjaScore=((taulaScores).reduce ((ac, actual)=>ac+actual,0))/animesPerStudio.length;
+  /*fiquem el valor de la mitjana dins de newConfigAnime*/
+  newConfigAnime.averageScore = mitjaScore;
+
+  return newConfigAnime;
   };
 
 
@@ -503,7 +523,8 @@ llistaAnime.showList();  /*imprimim la llista en pantalla*/
 llistaAnime.addAnime(steinsGate); /*n'afegim un individual*/
 llistaAnime.showList();
 
-llistaAnime.removeAnime(demonSlayer.getId); /*en treiem un amb el seu Id*/
+let elQueVullTreure=demonSlayer.getId; /*aconsegueixo la Id*/
+llistaAnime.removeAnime(elQueVullTreure); /*en treiem un amb el seu Id*/
 llistaAnime.showList();
 
 console.log("comprovació etapa 3");
@@ -517,7 +538,7 @@ llistaAnime.showList();  /*imprimim la llista ordenada per popularitat. */
     /* podriem haver fet també console.log(llistaAnime.sortAnimesByPopularity()); per imprimir-ho directament*/
 
 console.log("comprovació etapa 4");
-console.log(findAnimeById(llistaAnime.list,44511,0));
+console.log(findAnimeById(llistaAnime,44511,0));
 
 console.log("comprovació etapa 5");
 /*afegeixo tots els animes que faltaven*/
@@ -525,7 +546,10 @@ llistaAnime.addMultipleAnimes(demonSlayer, jujutsuKaisen, cowboyBebop, hunterXHu
 console.log(getMostCommonGenre(llistaAnime));
 
 console.log("comprovació etapa 6");
-console.log(getHighRatedAnimes(llistaAnime,8.5));
+console.log(getHighRatedAnimes(llistaAnime,8.5)); /*demanem els animes amb referència de puntuació 8.5 per exemple*/
 
 console.log("comprovació etapa 7");
-console.log(getAnimeInfo(dragonBallZ));
+console.log(getAnimeInfo(dragonBallZ)); /*preguntem la info d'un dels animes*/
+
+console.log("comprovació etapa 8");
+console.log(getAnimesByStudio(llistaAnime,"MAPPA"));
